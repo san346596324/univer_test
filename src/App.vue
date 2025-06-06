@@ -8,13 +8,14 @@ import {merge} from "@univerjs/core";
 
 import "@univerjs/presets/lib/styles/preset-sheets-core.css";
 
+// Vue3-Component
 const Vue3Component = defineComponent({
   setup(props) {
     console.log('Vue3Component', props);
-    return () => `<div style={{ width: 100, height: 100, background: '#fff' }}>弹出内容</div>`
+    return () => `<div style={{ width: 100, height: 100, background: '#fff' }}>Popup Content</div>`
   }
 });
-
+// Vue3-Component
 
 onMounted(()=>{
   const { univer, univerAPI } = createUniver({
@@ -61,13 +62,19 @@ onMounted(()=>{
 
   const fWorksheet = workbook.getActiveSheet();
   const fRange = fWorksheet.getRange('A1:J10');
+
+  //register univer component
   univerAPI.registerComponent(
       'myPopup',
-      () => `<div style={{ width: 100, height: 100, background: 'red' }}>弹出内容</div>`
+      Vue3Component,
+      {
+        framework: 'vue3',
+      }
   );
+  //register univer component
 
-// 将弹出窗口附加到范围的第一个单元格
-// 如果 disposeable 为 null，则表示 popup 添加失败
+  // 将弹出窗口附加到范围的第一个单元格
+  // 如果 disposeable 为 null，则表示 popup 添加失败
   const disposeable = fRange.attachPopup({
     // componentKey 必须是一个组件或已注册组件的键
     componentKey: 'myPopup',
