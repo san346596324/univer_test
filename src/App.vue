@@ -7,6 +7,7 @@ import {merge} from "@univerjs/core";
 
 
 import "@univerjs/presets/lib/styles/preset-sheets-core.css";
+import {DEFAULT_TEXT_FORMAT_EXCEL} from "@univerjs/engine-numfmt";
 
 // Vue3-Component
 const Vue3Component = defineComponent({
@@ -61,25 +62,13 @@ onMounted(()=>{
   const workbook = univerAPI.createWorkbook(univerData.value);
 
   const fWorksheet = workbook.getActiveSheet();
-  const fRange = fWorksheet.getRange('A1:J10');
 
-  //register univer component
-  univerAPI.registerComponent(
-      'myPopup',
-      Vue3Component,
-      {
-        framework: 'vue3',
-      }
-  );
-  //register univer component
-
-  // 将弹出窗口附加到范围的第一个单元格
-  // 如果 disposeable 为 null，则表示 popup 添加失败
-  const disposeable = fRange.attachPopup({
-    // componentKey 必须是一个组件或已注册组件的键
-    componentKey: 'myPopup',
-  });
-  console.log('disposeable', disposeable);
+  /**
+   *  problem
+   */
+  const fRange = fWorksheet.getRange('C1');
+  fRange.setValue('012345').setNumberFormat(DEFAULT_TEXT_FORMAT_EXCEL);
+  fRange.setValue('012345')
 
 
 
